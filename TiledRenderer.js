@@ -52,7 +52,7 @@ export class TiledRenderer {
     // this could for instance be done smarter by checking the memory limits, but right now a hardcoded max size should suffice 
     calculateOptimalTileSize() {
         let currentSize = this.maxTileSize;
-        for (let tileSize = 2; tileSize < this.maxTileSize || tileSize < this.resolution; tileSize++) {
+        for (let tileSize = 2; tileSize < this.maxTileSize && tileSize < this.resolution; tileSize++) {
             if ((this.resolution % (this.blurPadding + tileSize)) === 0) {
                 currentSize = tileSize
             }
@@ -199,8 +199,8 @@ export class TiledRenderer {
     }
 
     markSeam(tile, ctx) {
-        ctx.strokeStyle = 'rgba(0, 255, 255, 0.5)';
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(0, 255, 255, 1.0)';
+        ctx.lineWidth = 2;
         ctx.strokeRect(tile.x * this.totalTileSize, tile.y * this.totalTileSize, this.totalTileSize, this.totalTileSize);
 
     }
