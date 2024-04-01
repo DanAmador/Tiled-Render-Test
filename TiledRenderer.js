@@ -3,12 +3,16 @@ import {Cropper} from './Cropper.js';
 function delay(duration) {
     return new Promise(resolve => setTimeout(resolve, duration));
 }
+
+const MAX_BLUR_RADIUS = 320;
 export class TiledRenderer {
-    constructor(resolution, blurPercentage, maxTileSize = 1024) {
+    constructor(resolution, blurPercentage, maxTileSize = 2048) {
         this.resolution = resolution;
         this.blurPercentage = blurPercentage;
         this.maxTileSize = maxTileSize;
         this.blurPadding = Math.min(Math.floor(this.blurPercentage * this.resolution * 0.10), maxTileSize * this.blurPercentage);
+        this.blurPadding = Math.min(this.blurPadding, MAX_BLUR_RADIUS)
+        
         // this.tileSize = minTileSize
         this.tileSize = this.calculateOptimalTileSize();
         this.totalTileSize = this.tileSize + this.blurPadding;
@@ -44,9 +48,11 @@ export class TiledRenderer {
 
         return tilesHorizontal * tilesVertical;
     }
+    
+    // this could for instance be done smarter by checking the memory limits, but right now a hardcoded max size should suffice 
     calculateOptimalTileSize() {
         let currentSize = this.maxTileSize;
-        for (let tileSize = 2; tileSize < this.maxTileSize; tileSize++) {
+        for (let tileSize = 2; tileSize < this.maxTileSize || tileSize < this.resolution; tileSize++) {
             if ((this.resolution % (this.blurPadding + tileSize)) === 0) {
                 currentSize = tileSize
             }
@@ -118,7 +124,7 @@ export class TiledRenderer {
         const normOffsetY = tile.y * normTileSize;
         const offset = [normOffsetX, normOffsetY];
 
-        const bledPadding = Math.min(normTileSize + normTileSize * (this.blurPadding / this.totalTileSize), 1.0);
+        let bledPadding = Math.min(normTileSize + normTileSize * (this.blurPadding / this.totalTileSize), 1.0);
         // const normTileSize = Math.sqrt(this.totalTileSize / this.resolution) ;
         // console.log(offset, normTileSize, bledPadding, this.totalTileSize, this.tileSize, this.resolution);
         const uniforms = {
@@ -166,7 +172,7 @@ export class TiledRenderer {
             if (markSeams) {
                 this.markSeam(tile, ctx);
             }
-            // await delay(100);
+            await delay(50);
         }
 
         return stitchedCanvas;
