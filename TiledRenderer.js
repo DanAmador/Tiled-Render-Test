@@ -9,6 +9,7 @@ export class TiledRenderer {
         this.blurPercentage = blurPercentage;
         this.maxTileSize = maxTileSize;
         this.blurPadding = Math.min(Math.floor(this.blurPercentage * this.resolution * 0.10), maxTileSize * this.blurPercentage);
+        this.blurPadding = Math.min(this.blurPadding, 1);
         // this.tileSize = minTileSize
         this.tileSize = this.calculateOptimalTileSize();
         this.totalTileSize = this.tileSize + this.blurPadding;
