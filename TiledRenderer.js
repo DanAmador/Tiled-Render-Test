@@ -124,7 +124,7 @@ export class TiledRenderer {
         const uniforms = {
             influenceMask: { type: 'tex', value: withMask ? this.mask : this.whiteMask },
             uRadius: { type: 'int', value: this.blurPadding },
-            uKernel: { type: 'float[]', value: TiledRenderer.makeGaussianKernel(blurPercentage) },
+            uKernel: { type: 'float[]', value: TiledRenderer.makeGaussianKernel(this.blurPadding) },
             uTileOffset: { type: 'vec2', value: offset },
             uTileSize: { type: 'float', value: bledPadding },
 
@@ -166,7 +166,7 @@ export class TiledRenderer {
             if (markSeams) {
                 this.markSeam(tile, ctx);
             }
-            await delay(50);
+            // await delay(100);
         }
 
         return stitchedCanvas;

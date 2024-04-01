@@ -21,7 +21,7 @@ vec4 gaussianBlur(vec2 delta, vec2 uv) {
     for(int offset = 0; offset <= MAX_BLUR_RADIUS * 2; ++offset) {
         if(offset > uRadius * 2)
             break;
-        vec2 muv = uv + delta * float(offset - uRadius);
+        vec2 muv = uv + delta * float(offset - uRadius) ;
         float weight = uKernel[offset];
         vec4 smple = texture2D(tex, muv);
         col += smple * weight;
