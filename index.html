@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shader Image Generation</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    #controls {
+        display: flex; 
+        align-items: center; 
+        justify-content: space-evenly; 
+        position: relative;
+        top: 0;
+        left: 0;
+        height: 5vh;
+        width: 100vw; 
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #ddd;
+        padding: 1vw; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 10;
+        flex-grow: 1; 
+        margin: 0 0.5vw; 
+        flex: 1 1 10%; 
+        margin: 0 1vw; 
+    }
+    #resolutionSlider, #blurRadiusSlider{
+        flex-basis: 20%;
+    }
+    body {
+        font-size: 1vw; 
+    }
+    
+#cropper, #maskCheckbox {
+    align-self: stretch; 
+    display: flex;
+    align-items: center;
+    height: inherit;
+}
+    #outputImage {
+            border: 5px solid #000; 
+
+        position: relative; 
+    }
+</style>
+<body>
+    <div id="controls">
+
+        <label for="resolutionSlider">Resolution (up to 8K): </label>
+        <input type="range" id="resolutionSlider" min="512" max="7680" value="512" step="2">
+        <span id="resolutionValue">512</span>
+        <span id="tileSizeValue">1</span>
+
+        <label for="blurRadiusSlider">Blur Radius (0 to 1): </label>
+        <input type="range" id="blurRadiusSlider" min="0.01" max="1" value="0.48" step="0.01">
+        <span id="blurRadiusValue">0.48</span>
+
+        <label for="maskCheckbox">Use Mask: </label>
+        <input type="checkbox" id="maskCheckbox" checked>
+
+        <button id="cropper">Crop And Stitch</button>
+    </div>
+
+    <script type="module">
+       // import "./singlePass.js"
+       import "./tilePass.js"
+    </script>
+</body>
+
+</html>
