@@ -166,7 +166,7 @@ export class TiledRenderer {
             if (markSeams) {
                 this.markSeam(tile, ctx);
             }
-            await delay(100);
+            // await delay(100);
         }
 
         return stitchedCanvas;

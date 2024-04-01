@@ -13,11 +13,11 @@ let outputCanvas;
 async function initializeTiledRenderer(size, blurRadius) {
     const puzzle = 'hans-gauster-puzzle.jpg';
     const penguin = 'ian-parker-penguin.jpg';
-
+    const uvmap = "uv1.png"
     if(tiledRenderer) tiledRenderer.cleanup();
 
     tiledRenderer = new TiledRenderer(size, blurRadius);
-    await tiledRenderer.initialize(puzzle, penguin);
+    await tiledRenderer.initialize(uvmap, penguin);
 }
 
 async function updateResult() {

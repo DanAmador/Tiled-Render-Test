@@ -9,8 +9,8 @@ export class Cropper {
     }
 
     getStartCoordinates(tile, tileSize, blurPadding) {
-        const startX = tile.x * (tileSize + blurPadding) + blurPadding / 2 ;
-        const startY = tile.y * (tileSize + blurPadding) + blurPadding/ 2  ;
+        const startX = tile.x * (tileSize + blurPadding) + blurPadding  / 4 ;
+        const startY = tile.y * (tileSize + blurPadding) + blurPadding  / 4  ;
         return { startX, startY };
     }
     executeCropCommands(stitchedCanvas, resolution) {
@@ -24,12 +24,12 @@ export class Cropper {
 
 
             const { startX, startY } = this.getStartCoordinates(tile, tileSize, blurPadding);
-            const sWidth = tileSize;
-            const sHeight = tileSize;
+            const sWidth = tileSize  + 2;
+            const sHeight = tileSize + 2;
 
             // Destination coordinates on the cropped canvas
-            const dX = tile.x * tileSize;
-            const dY = tile.y * tileSize;
+            const dX = tile.x * tileSize + blurPadding /4;
+            const dY = tile.y * tileSize - blurPadding /4;
 
             // Crop the tile from the stitched canvas and draw it to the cropped canvas
             croppedCtx.drawImage(stitchedCanvas, startX, startY, sWidth, sHeight, dX, dY, sWidth, sHeight);
