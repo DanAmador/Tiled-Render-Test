@@ -38,7 +38,6 @@ vec4 gaussianBlur(vec2 delta, vec2 uv) {
 void main() {
 
     vec2 tileUv = (vUv * uTileSize) + uTileOffset;
-    vec4 maskSample = texture2D(influenceMask, tileUv);
     // tileUv.y = 1.0-tileUv.y;
     // tileUv.x = 0.0;
     // gl_FragColor = vec4(tileUv, 0,1);
@@ -46,6 +45,7 @@ void main() {
 
     // delta is dx/dy for individual samples and is modulated by mask input
     vec2 delta = 1.0 / _size * uTileSize;
+    vec4 maskSample = texture2D(influenceMask, tileUv);
     if(uDirection == 0) {
         delta.y = 0.0;
     } else {

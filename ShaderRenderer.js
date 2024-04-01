@@ -241,13 +241,13 @@ export class ShaderRenderer {
     async getRTImage () {
         const srcRT = this.renderTargets[this.rtIdx];
         srcRT.bind(this.gl);
-        const data = new Uint8Array(this.size[0] * this.size[1] * 4);
-        this.gl.readPixels(0, 0, this.size[0], this.size[1], this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
         const canvas = document.createElement('canvas');
-        canvas.width = this.size[0];
-        canvas.height = this.size[1];
+        canvas.width = Math.floor(this.size[0]);
+        canvas.height = Math.floor(this.size[1]);
+        const data = new Uint8Array(canvas.width * canvas.height * 4);
+        this.gl.readPixels(0, 0, canvas.width, canvas.height, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
         const ctx = canvas.getContext('2d');
-        const imgData = ctx.createImageData(this.size[0], this.size[1]);
+        const imgData = ctx.createImageData(canvas.width, canvas.height);
         imgData.data.set(data);
         ctx.putImageData(imgData, 0, 0);
         return canvas;
